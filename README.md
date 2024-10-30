@@ -37,7 +37,7 @@ Membuat Migrate
 
 Key Generate
 ```bash
-  php artisan migrate
+  php artisan key:generate
 ```
 
 Config Cache
