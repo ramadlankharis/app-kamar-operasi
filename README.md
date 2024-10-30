@@ -1,3 +1,71 @@
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://link-to-project
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies composer
+
+```bash
+  composer install
+```
+
+Copy .env.example 
+
+Rename .env.example to .env
+
+edit .env
+
+Config Cache
+```bash
+  php artisan config:cache
+```
+
+Membuat Migrate
+```bash
+  php artisan migrate
+```
+
+Key Generate
+```bash
+  php artisan migrate
+```
+
+Config Cache
+```bash
+  php artisan config:cache
+```
+
+Php serve
+```bash
+  php artisan serve
+```
+
+Php running npm
+```bash
+  php artisan npm run dev
+```
+
+Php running reverb
+```bash
+  php artisan reverb:start --debug
+```
+
+Php running queue
+```bash
+  php artisan queue:listen
+```
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
