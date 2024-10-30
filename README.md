@@ -27,42 +27,42 @@ edit .env
 
 Config Cache
 ```bash
-  php artisan config:cache
+php artisan config:cache
 ```
 
 Membuat Migrate
 ```bash
-  php artisan migrate
+php artisan migrate
 ```
 
 Key Generate
 ```bash
-  php artisan key:generate
+php artisan key:generate
 ```
 
 Config Cache
 ```bash
-  php artisan config:cache
+php artisan config:cache
 ```
 
 Php serve
 ```bash
-  php artisan serve
+php artisan serve
 ```
 
 Php running npm
 ```bash
-  php artisan npm run dev
+npm run dev
 ```
 
 Php running reverb
 ```bash
-  php artisan reverb:start --debug
+php artisan reverb:start --debug
 ```
 
 Php running queue
 ```bash
-  php artisan queue:listen
+php artisan queue:listen
 ```
 
 
