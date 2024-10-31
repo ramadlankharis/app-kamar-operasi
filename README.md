@@ -1,3 +1,7 @@
+## Environtment Apps
+
+- Php version 8.3
+- Node js version 20.11
 
 ## Run Locally
 
