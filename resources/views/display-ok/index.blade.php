@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/logo-rsui.ico') }}" />
+    <title>Monitoring OK</title>
     @vite(['resources/css/app.css'])
     @vite(['resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -166,7 +167,7 @@
             text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
         }
 
-        .card h3 {
+        .card h5 {
             position: absolute;
             bottom: 1.5rem;
             left: 50%;
@@ -219,6 +220,11 @@
                 margin-bottom: 1.5rem;
             }
 
+            .card h5 {
+                font-size: 1rem;
+                bottom: 1rem;
+            }
+
             .card h2 {
                 font-size: 1.5rem;
             }
@@ -234,15 +240,11 @@
             #tanggal-hari {
                 font-size: 1rem;
             }
-
-            .card h3 {
-                font-size: 1rem;
-                bottom: 1rem;
-            }
+           
         }
 
         /* Add smooth transitions */
-        .card, .card h1, .card h2 {
+        .card, .card h1, .card h2, .card h5{
             transition: all 0.3s ease-in-out;
         }
 
@@ -284,8 +286,7 @@
                     <div class="card-body">
                         <h2>{{$room->nama_ruangan}}</h2>
                         <h1 class="text-center" id="responseMessage{{$room->id}}">{{$room->status_operasi}}</h1>
-                        {{-- <h3 class="text-center" id="additionalInfo{{$room->id}}">{{$room->keterangan ?? 'Informasi Tambahan'}}</h3> --}}
-                        <h3 class="text-center" id="additionalInfo{{$room->id}}">Di Perbaharuai Sejak: </h3>
+                        <h5 class="text-center" id="updatedTime{{$room->id}}">Diperbarui Sejak: {{ \Carbon\Carbon::parse($room->updated_at)->format('d/m/Y H:i:s') }} </h5>
                     </div>
                 </div>
             </div>
@@ -295,6 +296,24 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
+
+    function updateClock() {
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        document.getElementById('tanggal-hari').innerHTML = formattedTime;
+    }
+
+    // Update setiap detik
+    setInterval(updateClock, 1000);
+    // Panggil sekali untuk menghindari delay 1 detik pertama
+    updateClock();
 
     function toTitleCase(str) {
         return str
@@ -313,6 +332,7 @@
 
                 // Ambil elemen messages berdasarkan ID room
                 const elementStatusKamar = document.getElementById(`responseMessage${room.id}`);
+                const elementUpdatedTime = document.getElementById(`updatedTime${room.id}`);
                 const elementCard = document.getElementById(`card-${room.id}`);
 
 
@@ -329,6 +349,8 @@
 
                         // Buat elemen pesan baru
                         elementStatusKamar.innerHTML = `${toTitleCase(e.status)}`;
+
+                        elementUpdatedTime.innerHTML = `Diperbarui Sejak: ${e.updatedAt}`;
 
                         elementCard.classList.add('card-active-hover');
 

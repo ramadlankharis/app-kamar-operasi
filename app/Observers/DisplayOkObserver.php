@@ -6,6 +6,7 @@ use App\Events\RealTimeDisplay;
 use App\Models\DisplayOk;
 use App\Models\RefStatusOperasi;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class DisplayOkObserver
 {
@@ -22,9 +23,15 @@ class DisplayOkObserver
      */
     public function updated(DisplayOk $displayOk): void
     {
-        //
+        //get status operasi
         $data = RefStatusOperasi::findOrFail($displayOk->squence_status_operasi);
-        RealTimeDisplay::dispatch($data->status_operasi, $displayOk->id);
+
+        // merubah format data Updated_at
+        $updateAt = $displayOk->updated_at;
+        $formattedupdateAt = Carbon::parse($updateAt)->format('d/m/Y H:i:s');
+
+        // dispatch event
+        RealTimeDisplay::dispatch($data->status_operasi, $displayOk->id, $formattedupdateAt);
         Log::info('DisplayOk updated '. $data->status_operasi);
     }
 
