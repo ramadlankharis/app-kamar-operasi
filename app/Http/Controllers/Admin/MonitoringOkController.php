@@ -46,7 +46,7 @@ class MonitoringOkController extends Controller
     {
 
         $datas = DisplayOk::select('id', 'nama_ruangan')->orderBy('id', 'asc')->get();
-        return view('admin.ok.pilih-ruangan-ok', compact('datas'));
+        return view('admin.update-status-ok.pilih-ruangan-ok', compact('datas'));
     }
 
     /**
@@ -63,7 +63,7 @@ class MonitoringOkController extends Controller
     
         $namaRuangan = Str::title($kamar->nama_ruangan);
     
-        return view('admin.ok.edit', compact('kamar', 'titleCaseStatusKamar', 'namaRuangan'));
+        return view('admin.update-status-ok.edit', compact('kamar', 'titleCaseStatusKamar', 'namaRuangan'));
     }
 
 
