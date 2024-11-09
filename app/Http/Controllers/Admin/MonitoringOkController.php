@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DisplayOk;
 use App\Models\RefStatusOperasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class MonitoringOkController extends Controller
@@ -69,28 +70,43 @@ class MonitoringOkController extends Controller
 
     public function ajaxNextStep(Request $request, string $id)
     {
-        //  return response()->json(['message' =>$request->id ]);
+        //  return response()->json(['message' => $id ]);
         
         if ($request->step == 'next') {
         
-            $kamar = DisplayOk::findOrFail($request->id);
-        
+            $kamar = DisplayOk::findOrFail($id);
             $squence = $kamar->squence_status_operasi;
-                if ($squence >= 6 ) {
-                    $kamar->squence_status_operasi = 1;
-                    $kamar->save();
-                    $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
-                    return response()->json(['message' =>  $statusKamar->status_operasi]);
-                }
 
-            // Update item dengan data baru
-            $kamar->squence_status_operasi = $squence + 1;
-
+            // Cek validitas sequence terlebih dahulu
+            $maxSequence = RefStatusOperasi::max('squence_status_operasi');
+            
+            if ($squence >= $maxSequence) {
+                $kamar->squence_status_operasi = 1;
+            } else {
+                $kamar->squence_status_operasi = $squence + 1;
+            }
+            
             // Simpan perubahan
             $kamar->save();
-
-            $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
-
+            
+            // Pastikan query mencari berdasarkan sequence yang valid
+            $statusKamar = RefStatusOperasi::where('squence_status_operasi', $kamar->squence_status_operasi)->firstOrFail();
+            
+            // Tambahkan pengecekan null
+            if (!$statusKamar) {
+                return response()->json([
+                    'error' => 'Status operasi tidak ditemukan',
+                    'sequence' => $kamar->squence_status_operasi
+                ], 400);
+            }
+            
+            Log::info('Updating Status', [
+                'id' => $id,
+                'old_sequence' => $squence,
+                'new_sequence' => $kamar->squence_status_operasi,
+                'request' => $request->all()
+            ]);
+            
             return response()->json(['message' => $statusKamar->status_operasi]);
         }
 
@@ -103,23 +119,38 @@ class MonitoringOkController extends Controller
         
         if ($request->step == 'back') {
         
-            $kamar = DisplayOk::findOrFail($request->id);
-        
+            $kamar = DisplayOk::findOrFail($id);
             $squence = $kamar->squence_status_operasi;
-                if ($squence <= 1 ) {
-                    $kamar->squence_status_operasi = 6;
-                    $kamar->save();
-                    $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
-                    return response()->json(['message' =>  $statusKamar->status_operasi]);
-                }
 
-            // Update item dengan data baru                         
-            $kamar->squence_status_operasi = $squence - 1;    
+            // Cek validitas sequence terlebih dahulu
+            $minSequence = RefStatusOperasi::min('squence_status_operasi');
+            $maxSequence = RefStatusOperasi::max('squence_status_operasi');
 
+            if ($squence <= $minSequence) {
+                $kamar->squence_status_operasi = $maxSequence;
+            } else {
+                $kamar->squence_status_operasi = $squence - 1;
+            }
+        
             // Simpan perubahan dengan save()
             $kamar->save(); 
 
             $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
+
+            // Tambahkan pengecekan null
+            if (!$statusKamar) {
+                return response()->json([
+                    'error' => 'Status operasi tidak ditemukan',
+                    'sequence' => $kamar->squence_status_operasi
+                ], 400);
+            }
+            
+            Log::info('Updating Status', [
+                'id' => $id,
+                'old_sequence' => $squence,
+                'new_sequence' => $kamar->squence_status_operasi,
+                'request' => $request->all()
+            ]);
 
             return response()->json(['message' => $statusKamar->status_operasi]);
         }

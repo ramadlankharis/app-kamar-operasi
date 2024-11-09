@@ -209,8 +209,25 @@ $(document).ready(function() {
                 console.log(response);
             },
             error: function(xhr, status, error) {
-                console.log(error);
-                $('#responseMessage').text('Error: ' + error);
+                // Tangani berbagai kemungkinan error
+                let errorMessage = 'Terjadi kesalahan';
+                
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
+                } else if (xhr.status === 404) {
+                    errorMessage = 'Status tidak ditemukan';
+                } else if (xhr.status === 500) {
+                    errorMessage = 'Terjadi kesalahan server';
+                }
+
+                console.error('Ajax Error:', {
+                    status: xhr.status,
+                    error: error,
+                    response: xhr.responseJSON
+                });
+
+                $('#responseMessage')
+                    .text('Error: ' + errorMessage);
             }
         });
     });
@@ -221,6 +238,7 @@ $(document).ready(function() {
         var updateUrl = '{{ route("admin.monitoring.ajax.next.step", ":id") }}'; // ":id" sebagai placeholder
             // Ganti placeholder :id dengan nilai dinamis dari variabel id
         let ajaxUrl = updateUrl.replace(':id', id);
+
         $.ajax({
             url: ajaxUrl,
             type: 'PUT',
@@ -230,11 +248,28 @@ $(document).ready(function() {
             },
             success: function(response) {
                 $('#responseMessage').text(toTitleCase(response.message));
-                // console.log(response);
+                console.log(response);
             },
             error: function(xhr, status, error) {
-                console.log(error)
-                $('#responseMessage').text('Error: ' + error);
+                // Tangani berbagai kemungkinan error
+                let errorMessage = 'Terjadi kesalahan';
+                
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
+                } else if (xhr.status === 404) {
+                    errorMessage = 'Status tidak ditemukan';
+                } else if (xhr.status === 500) {
+                    errorMessage = 'Terjadi kesalahan server';
+                }
+
+                console.error('Ajax Error:', {
+                    status: xhr.status,
+                    error: error,
+                    response: xhr.responseJSON
+                });
+
+                $('#responseMessage')
+                    .text('Error: ' + errorMessage);
             }
         });
     });

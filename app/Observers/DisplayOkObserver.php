@@ -24,7 +24,8 @@ class DisplayOkObserver
     public function updated(DisplayOk $displayOk): void
     {
         //get status operasi
-        $data = RefStatusOperasi::findOrFail($displayOk->squence_status_operasi);
+        // $data = RefStatusOperasi::findOrFail($displayOk->squence_status_operasi);
+        $data = RefStatusOperasi::where('squence_status_operasi', $displayOk->squence_status_operasi)->first();
 
         // merubah format data Updated_at
         $updateAt = $displayOk->updated_at;
