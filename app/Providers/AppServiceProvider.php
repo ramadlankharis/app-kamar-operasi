@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\DisplayOk;
 use App\Observers\DisplayOkObserver;
+use App\Services\DailyLoggerService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(DailyLoggerService::class, function ($app) {
+            return new DailyLoggerService();
+        });
     }
 
     /**

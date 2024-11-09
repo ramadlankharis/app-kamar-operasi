@@ -5,12 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DisplayOk;
 use App\Models\RefStatusOperasi;
+use App\Services\DailyLoggerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class MonitoringOkController extends Controller
 {
+
+    protected $logger;
+    
+    public function __construct(DailyLoggerService $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -100,11 +109,12 @@ class MonitoringOkController extends Controller
                 ], 400);
             }
             
-            Log::info('Updating Status', [
-                'id' => $id,
+            $this->logger->info('Updating Status', [
+                'request_step' => $request->step,
+                'id_ruangan' => $id,
+                'nama_ruangan' => $kamar->nama_ruangan,
                 'old_sequence' => $squence,
-                'new_sequence' => $kamar->squence_status_operasi,
-                'request' => $request->all()
+                'new_sequence' =>  $statusKamar->squence_status_operasi,
             ]);
             
             return response()->json(['message' => $statusKamar->status_operasi]);
@@ -145,11 +155,12 @@ class MonitoringOkController extends Controller
                 ], 400);
             }
             
-            Log::info('Updating Status', [
-                'id' => $id,
+            $this->logger->info('Updating Status', [
+                'request_step' => $request->step,
+                'id_ruangan' => $id,
+                'nama_ruangan' => $kamar->nama_ruangan,
                 'old_sequence' => $squence,
-                'new_sequence' => $kamar->squence_status_operasi,
-                'request' => $request->all()
+                'new_sequence' =>  $statusKamar->squence_status_operasi,
             ]);
 
             return response()->json(['message' => $statusKamar->status_operasi]);
