@@ -22,6 +22,9 @@
                             <i class="fas fa-tachometer-alt"></i>Monitoring OK</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                             <li>
+                                <a href="{{ route('admin.master-status-operasi.index') }}">Master Status Operasi</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('admin.master-ok.index') }}">Master OK</a>
                             </li>
                             <li>

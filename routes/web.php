@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardOkController;
 use App\Http\Controllers\Admin\MasterOkController;
+use App\Http\Controllers\Admin\MasterStatusOperasiController;
 use App\Http\Controllers\Admin\MonitoringOkController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardMonitorController;
@@ -38,6 +39,16 @@ Route::get('/dashboard', function () {
 
 // route admin
 Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(function () {
+
+    // Master Status Operasi
+    Route::get('/master-status-operasi', [MasterStatusOperasiController::class, 'index'])->name('admin.master-status-operasi.index');
+    Route::get('/master-status-operasi/create', [MasterStatusOperasiController::class, 'create'])->name('admin.master-status-operasi.create');
+    Route::post('/master-status-operasi', [MasterStatusOperasiController::class, 'store'])->name('admin.master-status-operasi.store');
+    Route::get('/master-status-operasi/{id}/edit', [MasterStatusOperasiController::class, 'edit'])->name('admin.master-status-operasi.edit');
+    Route::put('/master-status-operasi/{id}', [MasterStatusOperasiController::class, 'update'])->name('admin.master-status-operasi.update');
+    Route::delete('/master-status-operasi/{id}', [MasterStatusOperasiController::class, 'destroy'])->name('admin.master-status-operasi.destroy');
+    Route::get('/master-status-operasi/reorder', [MasterStatusOperasiController::class, 'indexReorder'])->name('admin.master-status-operasi.reorder.index');
+    Route::post('/master-status-operasi/reorder', [MasterStatusOperasiController::class, 'updateOrder'])->name('admin.master-status-operasi.update-order');
 
     // Master OK
     Route::get('/master-ok', [MasterOkController::class, 'index'])->name('admin.master-ok.index');

@@ -68,6 +68,11 @@ class MonitoringOkController extends Controller
         $kamar = DisplayOk::findOrFail($id);
 
         $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
+
+        if (!$statusKamar) {
+            $kamar->squence_status_operasi = RefStatusOperasi::max('squence_status_operasi');
+            $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
+        }
     
         $titleCaseStatusKamar = Str::title($statusKamar->status_operasi);
 
