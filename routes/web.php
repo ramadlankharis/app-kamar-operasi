@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardOkController;
+use App\Http\Controllers\Admin\MasterOkController;
 use App\Http\Controllers\Admin\MonitoringOkController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardMonitorController;
@@ -37,12 +38,17 @@ Route::get('/dashboard', function () {
 
 // route admin
 Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(function () {
-    // Route::get('/', [MonitoringOkController::class, 'index'])->name('admin.monitoring.index');
+
+    // Master OK
+    Route::get('/master-ok', [MasterOkController::class, 'index'])->name('admin.master-ok.index');
+    Route::get('/master-ok/{id}/edit', [MasterOkController::class, 'edit'])->name('admin.master-ok.edit');
+    Route::put('/master-ok/{id}', [MasterOkController::class, 'update'])->name('admin.master-ok.update');
+
+    // Update Status OK
     Route::get('/pilih-ruangan/ok', [MonitoringOkController::class, 'pilihRuanganOk'])->name('index.pilih.ruangan.ok');
     Route::get('/update-status-ruangan/{id}/edit', [MonitoringOkController::class, 'edit'])->name('admin.monitoring.edit');
     Route::put('/update-status-ruangan/{id}', [MonitoringOkController::class, 'updateRuangan'])->name('admin.monitoring.update');
-
-    // ajax admin.monitoring.edit
+    // ajax Update Status OK
     Route::put('/ajax/update-status-ruangan-next/{id}', [MonitoringOkController::class, 'ajaxNextStep'])->name('admin.monitoring.ajax.next.step');
     Route::put('/ajax/update-status-ruangan-back/{id}', [MonitoringOkController::class, 'ajaxBackStep'])->name('admin.monitoring.ajax.back.step');
 });
