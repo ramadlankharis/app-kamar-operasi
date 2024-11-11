@@ -70,10 +70,17 @@ class MonitoringOkController extends Controller
         $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
     
         $titleCaseStatusKamar = Str::title($statusKamar->status_operasi);
+
+        $sequences = RefStatusOperasi::orderBy('squence_status_operasi', 'asc')
+        ->get()
+        ->map(function($sequence) {
+            $sequence->status_operasi = Str::title($sequence->status_operasi);
+            return $sequence;
+        });
     
         $namaRuangan = Str::title($kamar->nama_ruangan);
     
-        return view('admin.update-status-ok.edit', compact('kamar', 'titleCaseStatusKamar', 'namaRuangan'));
+        return view('admin.update-status-ok.edit', compact('kamar', 'titleCaseStatusKamar', 'namaRuangan', 'sequences'));
     }
 
 
@@ -117,7 +124,10 @@ class MonitoringOkController extends Controller
                 'new_sequence' =>  $statusKamar->squence_status_operasi,
             ]);
             
-            return response()->json(['message' => $statusKamar->status_operasi]);
+            return response()->json([
+                'message' => $statusKamar->status_operasi,
+                'sequence' => $statusKamar->squence_status_operasi
+            ]);
         }
 
         return response()->json(['message' => 'bukan next kah?']);
@@ -163,7 +173,10 @@ class MonitoringOkController extends Controller
                 'new_sequence' =>  $statusKamar->squence_status_operasi,
             ]);
 
-            return response()->json(['message' => $statusKamar->status_operasi]);
+            return response()->json([
+                'message' => $statusKamar->status_operasi,
+                'sequence' => $statusKamar->squence_status_operasi
+            ]);
         }
 
         return response()->json(['message' => 'bukan back kah?']);
