@@ -368,9 +368,12 @@
         <div class="card shadow-lg border-0 rounded-lg">
             <!-- Card Header dengan gradient -->
             <div class="card-header bg-gradient-primary py-3">
-                <h5 class="mb-0 text-white ">
+                <h5 class="mb-0 text-white float-left ">
                     <i class="fas fa-door-open mr-2"></i>
                     Update Status Ruangan
+                </h5>
+                <h5 class="mb-0 text-white float-right" id="tanggal-hari">
+                    <i class="fas fa-door-open mr-2"></i>
                 </h5>
             </div>
             
@@ -573,6 +576,24 @@ $(document).ready(function() {
             }
         });
     });
+
+    function updateClock() {
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        document.getElementById('tanggal-hari').innerHTML = formattedTime;
+    }
+
+    // Update setiap detik
+    setInterval(updateClock, 1000);
+    // Panggil sekali untuk menghindari delay 1 detik pertama
+    updateClock();
 })
 </script>
 @endpush
