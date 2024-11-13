@@ -136,13 +136,22 @@ class MasterStatusOperasiController extends Controller
         // return $id;
         DB::beginTransaction();
         try {
+
+            
             // Ambil data yang akan dihapus
             $item = RefStatusOperasi::findOrFail($id);
             $currentUrutan = $item->squence_status_operasi;
-            
+            $totalStatus = RefStatusOperasi::count();
+
+            if($totalStatus == 1){
+                return response()->json([
+                    'error' => 'Data Tidak Bisa Dihapus. Data Tidak Boleh Kosong',
+                ], 400); // 400 untuk menunjukkan error client-side (optional)
+            }
+
             // Hapus data
             $item->delete();
-            
+
             // Update urutan untuk data yang ada di bawahnya
             RefStatusOperasi::where('squence_status_operasi', '>', $currentUrutan)
                 ->orderBy('squence_status_operasi', 'asc')
@@ -152,14 +161,22 @@ class MasterStatusOperasiController extends Controller
                         $record->save();
                     }
                 });
+
+            $maxUrutan = RefStatusOperasi::max('squence_status_operasi');
+            // Update urutan untuk data di displayOK
+            $dataOutofRange = DisplayOk::where('squence_status_operasi', '>',$maxUrutan)->get();
+
+
+            foreach ($dataOutofRange as $data) {
+                $data->squence_status_operasi =  $maxUrutan;
+                $data->save();
+            }
                 
             DB::commit();
             return response()->json([
                 'success' => true,
                 'message' => 'Data berhasil dihapus'
             ]);
-            // return redirect()->route('admin.master-status-operasi.index')
-            //              ->with('success', 'Data berhasil diperbarui');
             
         } catch (\Exception $e) {
             DB::rollback();
