@@ -225,7 +225,7 @@ $(document).on('click', '.delete-btn', function (e) {
     var id = $(this).data('id');
     Swal.fire({
             title: "Apakah Anda Yakin?",
-            text: "Kamu tidak akan bisa mengembalikan ini!",
+            text: "Semua status operasi di kamar akan di reset ke awal!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -242,16 +242,31 @@ $(document).on('click', '.delete-btn', function (e) {
                     },
                     success: function (response) {
                         Swal.fire({
-                            timer: 2000,
+                            timer: 20000,
                             timerProgressBar: true,
                             title: "Deleted!",
-                            text: response.message,
-                            icon: "success"
+                            text: JSON.stringify(response.message),
+                            // text: response.message,
+                            icon: "success",
+                            willClose: () => {
+                                location.reload();
+                            }
                         });
-                        location.reload()
                     },
                         error: function(response) {
-                            alert(response.responseJSON.error);
+                            
+                            Swal.fire({
+                                timer: 2000,
+                                timerProgressBar: true,
+                                icon: 'error',
+                                title: 'Error',
+                                // text: JSON.stringify(response.error),
+                                text: response.responseJSON.error,
+                                willClose: () => {
+                                    location.reload();
+                                }
+                            });
+                            // alert(response.responseJSON.error);
                     }
                 });
 
