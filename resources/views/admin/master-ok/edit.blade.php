@@ -1,6 +1,8 @@
 {{-- resources/views/admin/master-ok/edit.blade.php --}}
 @extends('layouts.dashboard-admin')
 
+@section('title', 'Edit Status Ruangan')
+
 @push('styles')
 <style>
 .bg-gradient-primary {

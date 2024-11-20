@@ -1,6 +1,8 @@
 {{-- resources/views/admin/master-status-operasi/index.blade.php --}}
 @extends('layouts.dashboard-admin')
 
+@section('title', 'Status Operasi Manager Reorder')
+
 @push('styles')
 <style>
 .draggable-item {

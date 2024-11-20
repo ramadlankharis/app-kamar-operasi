@@ -1,5 +1,7 @@
 @extends('layouts.dashboard-admin')
 
+@section('title', 'Update Status Ruangan')
+
 @push('styles')
 <style>
 .bg-gradient-primary {

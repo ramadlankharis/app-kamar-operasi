@@ -11,7 +11,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/logo-rsui.ico') }}" />
 
     <!-- Title Page-->
-    <title>Dashboard</title>
+    {{-- <title>Dashboard</title> --}}
+    <title>@yield('title') - Dashboard</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{ asset('dashboard-admin/css/font-face.css')}} " rel="stylesheet" media="all">

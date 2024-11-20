@@ -2,6 +2,8 @@
 
 @extends('layouts.dashboard-admin')
 
+@section('title', 'Master OK')
+
 @push('styles')
 <style>
     .bg-gradient-primary {

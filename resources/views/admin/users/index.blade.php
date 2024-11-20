@@ -1,6 +1,8 @@
 {{-- resources/views/admin/master-status-operasi/index.blade.php --}}
 @extends('layouts.dashboard-admin')
 
+@section('title', 'Manajemen Users')
+
 @push('styles')
 <style>
 .bg-gradient-primary {

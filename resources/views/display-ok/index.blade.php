@@ -273,9 +273,12 @@
   </head>
   <body>
     <div class="container">
-        <div class="header">
-            <h5>Monitor Ruang Operasi</h5>
-            <h5 id="tanggal-hari"></h5>
+        <div class="header d-flex align-items-center justify-content-between w-100 p-3">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{{ asset('img/logo-rsui.png')}}" alt="logoRSUI" style="width: 35px; height: auto;">
+                <h5 class="mb-0">Monitor Ruang Operasi</h5>
+            </div>
+            <h5 class="mb-0" id="tanggal-hari"></h5>
         </div>
 
         <div class="row justify-content-center">

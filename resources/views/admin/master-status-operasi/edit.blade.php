@@ -1,6 +1,8 @@
 {{-- resources/views/admin/master-ok/edit.blade.php --}}
 @extends('layouts.dashboard-admin')
 
+@section('title', 'Edit Status Operasi')
+
 @push('styles')
 <style>
 .bg-gradient-primary {
@@ -57,7 +59,7 @@
             <div class="card-header bg-gradient-primary py-3">
                 <h5 class="mb-0 text-white">
                     <i class="fas fa-door-open mr-2"></i>
-                    Edit Status Ruangan
+                    Edit Status Operasi
                 </h5>
             </div>
             <div class="card-body">
