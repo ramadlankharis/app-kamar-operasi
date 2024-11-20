@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="header-mobile-inner">
                     <a class="logo" href="index.html">
-                        <img src="images/icon/logo.png" alt="CoolAdmin" />
+                        <img src="{{ asset('img/logo-rsui-samping-w-500.png')}}" alt="LogoRSUI" style="width: 35vw; height: auto;" />
                     </a>
                     <button class="hamburger hamburger--slider" type="button">
                         <span class="hamburger-box">
@@ -21,15 +21,24 @@
                         <a class="js-arrow" href="#">
                             <i class="fas fa-tachometer-alt"></i>Monitoring OK</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                            @role('admin')
+                            <li>
+                                <a href="{{ route('users.index') }}">Manajemen Users</a>
+                            </li>
                             <li>
                                 <a href="{{ route('admin.master-status-operasi.index') }}">Master Status Operasi</a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.master-ok.index') }}">Master OK</a>
                             </li>
+                            @endrole
+                            {{-- @role('operator') --}}
+                            @hasanyrole('operator|admin')
                             <li>
                                 <a href="{{route('index.pilih.ruangan.ok')}}">Update Status OK</a>
                             </li>
+                            {{-- @endrole --}}
+                            @endhasanyrole
                         </ul>
                     </li>
                     {{-- <li>

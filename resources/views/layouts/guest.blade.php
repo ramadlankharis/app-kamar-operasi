@@ -17,8 +17,9 @@
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <a href="{{route('users.index')}}">
+                    {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
+                    <img src="{{ asset('img/logo-rsui-samping-w-500.png')}}" alt="LogoRSUI" style="width: 8vw; height: auto;" />
                 </a>
             </div>
 

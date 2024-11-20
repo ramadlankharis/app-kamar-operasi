@@ -1,7 +1,7 @@
 <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
         <a href="#">
-            <img src="images/icon/logo.png" alt="Cool Admin" />
+            <img src="{{ asset('img/logo-rsui-samping-w-500.png')}}" alt="LogoRSUI" style="width: 8vw; height: auto;" />
         </a>
     </div>
     <div class="menu-sidebar__content js-scrollbar1">
@@ -11,15 +11,24 @@
                     <a class="js-arrow" href="#">
                         <i class="fas fa-tachometer-alt"></i>Monitoring OK</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        @role('admin')
+                        <li>
+                            <a href="{{ route('users.index') }}">Manajemen Users</a>
+                        </li>
                         <li>
                             <a href="{{ route('admin.master-status-operasi.index') }}">Master Status Operasi</a>
                         </li>
                         <li>
                             <a href="{{ route('admin.master-ok.index') }}">Master OK</a>
                         </li>
+                        @endrole
+                        {{-- @role('operator') --}}
+                        @hasanyrole('operator|admin')
                         <li>
                             <a href="{{route('index.pilih.ruangan.ok')}}">Update Status OK</a>
                         </li>
+                        {{-- @endrole --}}
+                        @endhasanyrole
                     </ul>
                 </li>
                 {{-- <li>

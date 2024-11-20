@@ -23,6 +23,18 @@
             <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
+        {{-- Role --}}
+        <div class="mt-4">
+            <x-input-label for="user_role" :value="__('User Role')" />
+            <select id="user_role" name="user_role" class="block mt-1 w-full form-select">
+                <option value="" disabled selected>-- Select a role --</option>
+                @foreach ($roles as $role)
+                    <option value="{{$role->name}}">{{$role->name}}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('user_role')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

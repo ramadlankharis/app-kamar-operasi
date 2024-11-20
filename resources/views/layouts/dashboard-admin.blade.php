@@ -8,6 +8,7 @@
     <meta name="description" content="au theme template">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/logo-rsui.ico') }}" />
 
     <!-- Title Page-->
     <title>Dashboard</title>
