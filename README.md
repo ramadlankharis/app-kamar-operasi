@@ -17,6 +17,12 @@ Go to the project directory
   cd my-project
 ```
 
+Install dependencies composer
+
+```bash
+  composer install
+```
+
 Copy .env.example
 
 Rename .env.example to .env
@@ -41,11 +47,13 @@ Key Generate
 php artisan key:generate
 ```
 
-Install dependencies composer
+Install reverb
 
 ```bash
-  composer install
+php artisan reverb:install
 ```
+
+saat install pilih yes
 
 Config Cache
 
