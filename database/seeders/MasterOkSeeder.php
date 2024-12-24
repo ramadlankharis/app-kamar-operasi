@@ -13,13 +13,13 @@ class MasterOkSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 1; $i <= 6; $i++) {    
+        for($i = 1; $i <= 9; $i++) {
             DisplayOk::create([
                 'nama_ruangan' => 'COT-'.$i,
                 'squence_status_operasi' => 1,
                 'is_active' => true,
                 'sender' => 'admin'
-            ]); 
+            ]);
        }
     }
 }
