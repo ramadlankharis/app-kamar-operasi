@@ -139,6 +139,10 @@
                 <div id="success-message" class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
+                @if(session('danger'))
+                <div id="danger-message" class="alert alert-danger">{{ session('danger') }}</div>
+                @endif
+
                 <div class="row">
                     <div class="col-md-12 d-flex justify-content-end">
                         {{-- <a href="{{ route('admin.master-status-operasi.reorder.index') }}" class="reorder-btn btn-sm mr-2">  ☰ Edit Urutan</a> --}}
@@ -203,6 +207,18 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var successMessage = document.getElementById('success-message');
+    if (successMessage) {
+        setTimeout(function() {
+            successMessage.style.transition = 'opacity 1s';
+            successMessage.style.opacity = '0';
+            setTimeout(function() {
+                successMessage.style.display = 'none';
+            }, 1000);
+        }, 3000);
+    }
+});
+document.addEventListener('DOMContentLoaded', function() {
+    var successMessage = document.getElementById('danger-message');
     if (successMessage) {
         setTimeout(function() {
             successMessage.style.transition = 'opacity 1s';
