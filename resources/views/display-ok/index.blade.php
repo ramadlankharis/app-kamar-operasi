@@ -469,8 +469,8 @@
                         elementUpdatedTime.innerHTML = `Diperbarui Sejak: ${e.updatedAt}`;
                         elementRoomName.innerHTML = e.roomName;
                         elementIndicatorText.innerHTML = e.roomIsActive;
-                        elementIndicatorText.innerHTML = e.roomIsActive === '1' ? '' : '(Maintenance)';
-                        if (e.roomIsActive === '1') {
+                        elementIndicatorText.innerHTML = e.roomIsActive  ? '' : '(Maintenance)';
+                        if (e.roomIsActive) {
                             elementIndicatorStatus.classList.remove('maintenance');
                             elementIndicatorStatus.classList.add('active');
                             elementCard.classList.remove('card-disabled');
