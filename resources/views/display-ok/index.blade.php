@@ -1,83 +1,127 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/logo-rsui.ico') }}" />
     <title>Monitoring OK</title>
-    @vite(['resources/css/app.css'])
-    @vite(['resources/js/app.js'])
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/echo.js'])
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
     <style>
-    /* Modern Color Palette */
-    :root {
-        /* Primary Colors - Inspired by Material Design 3.0 & Tailwind */
-        --primary-blue: #0F72EA;    /* More vibrant blue, similar to Dropbox */
-        --success-green: #10B981;   /* Modern green like Shopify */
-        --warning-yellow: #F59E0B;  /* Warmer yellow like Stripe */
-        --danger-red: #EF4444;      /* Refined red from Tailwind */
-        --info-blue: #06B6D4;       /* Fresh cyan from modern design systems */
-        --neutral-gray: #475569;    /* Slate gray from modern palettes */
+        /* Modern Color Palette */
+        :root {
+            /* Primary Colors - Inspired by Material Design 3.0 & Tailwind */
+            --primary-blue: #0F72EA;
+            /* More vibrant blue, similar to Dropbox */
+            --success-green: #10B981;
+            /* Modern green like Shopify */
+            --warning-yellow: #F59E0B;
+            /* Warmer yellow like Stripe */
+            --danger-red: #EF4444;
+            /* Refined red from Tailwind */
+            --info-blue: #06B6D4;
+            /* Fresh cyan from modern design systems */
+            --neutral-gray: #475569;
+            /* Slate gray from modern palettes */
 
-        /* Card Background Colors - Softer with better contrast */
-        --card-1: #F0F7FF;         /* Soft blue background */
-        --card-2: #F0FDF4;         /* Mint green background */
-        --card-3: #FFFBEB;         /* Warm yellow background */
-        --card-4: #FEF2F2;         /* Soft red background */
-        --card-5: #ECFEFF;         /* Fresh cyan background */
-        --card-6: #F8FAFC;         /* Clean slate background */
+            /* Card Background Colors - Softer with better contrast */
+            --card-1: #06B6D4;
+            /* Soft blue background */
+            --card-2: #aec4b5;
+            /* Mint green background */
+            --card-3: #f0e5ad;
+            /* Warm yellow background */
+            --card-4: #d3b4b4;
+            /* Soft red background */
+            --card-5: #85dade;
+            /* Fresh cyan background */
+            --card-6: #568abe;
+            /* Clean slate background */
+            --card-7: #efcd49;
+            --card-8: #55bbc4;
+            --card-9: #c09494;
 
-        /* Gradient Variations for Cards */
-        --gradient-1: linear-gradient(135deg, #F0F7FF 0%, #E6F0FF 100%);
-        --gradient-2: linear-gradient(135deg, #F0FDF4 0%, #E6FAF0 100%);
-        --gradient-3: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-        --gradient-4: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
-        --gradient-5: linear-gradient(135deg, #ECFEFF 0%, #CFFAFE 100%);
-        --gradient-6: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
 
-        /* Hover State Colors */
-        --hover-blue: #0056D6;     /* Darker blue for hover */
-        --hover-green: #059669;    /* Darker green for hover */
-        --hover-yellow: #D97706;   /* Darker yellow for hover */
-        --hover-red: #DC2626;      /* Darker red for hover */
-        --hover-cyan: #0891B2;     /* Darker cyan for hover */
-        --hover-gray: #334155;     /* Darker gray for hover */
+            /* Gradient Variations for Cards */
+            /* --gradient-1: linear-gradient(135deg, #00C2D1 0%, #2aecfe 100%);
+            --gradient-2: linear-gradient(135deg, #357ded 0%, #E6FAF0 100%);
+            --gradient-3: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            --gradient-4: linear-gradient(135deg, #56eef4 0%, #FEE2E2 100%);
+            --gradient-5: linear-gradient(135deg, #CFFAFE 0%, #b5d6d6 100%);
+            --gradient-6: linear-gradient(135deg, #9cf6f6 0%, #f9b4ed 100%);
+            --gradient-7: linear-gradient(135deg, #e574bc 0%, #ff81c8 100%);
+            --gradient-8: linear-gradient(135deg, #0267c1 0%, #027be7 100%);
+            --gradient-9: linear-gradient(135deg, #0075c4 0%, #F1F5F9 100%); */
 
-        /* Text Colors for Better Readability */
-        --text-primary: #1E293B;   /* Dark blue-gray for primary text */
-        --text-secondary: #475569; /* Medium blue-gray for secondary text */
-        --text-light: #94A3B8;     /* Light blue-gray for tertiary text */
-    }
+            /* Hover State Colors */
+            --hover-blue: #0056D6;
+            /* Darker blue for hover */
+            --hover-green: #059669;
+            /* Darker green for hover */
+            --hover-yellow: #D97706;
+            /* Darker yellow for hover */
+            --hover-red: #DC2626;
+            /* Darker red for hover */
+            --hover-cyan: #0891B2;
+            /* Darker cyan for hover */
+            --hover-gray: #334155;
+            /* Darker gray for hover */
+
+            /* Text Colors for Better Readability */
+            --text-primary: #1E293B;
+            /* Dark blue-gray for primary text */
+            --text-secondary: #475569;
+            /* Medium blue-gray for secondary text */
+            --text-light: #94A3B8;
+            /* Light blue-gray for tertiary text */
+        }
 
         /* Example usage in cards */
         .card-bg-1 {
-            background: var(--gradient-1);
+            background: var(--card-1);
             border-left: 4px solid var(--primary-blue);
         }
 
         .card-bg-2 {
-            background: var(--gradient-2);
+            background: var(--card-2);
             border-left: 4px solid var(--success-green);
         }
 
         .card-bg-3 {
-            background: var(--gradient-3);
+            background: var(--card-3);
             border-left: 4px solid var(--warning-yellow);
         }
 
         .card-bg-4 {
-            background: var(--gradient-4);
+            background: var(--card-4);
             border-left: 4px solid var(--danger-red);
         }
 
         .card-bg-5 {
-            background: var(--gradient-5);
+            background: var(--card-5);
             border-left: 4px solid var(--info-blue);
         }
 
         .card-bg-6 {
-            background: var(--gradient-6);
+            background: var(--card-6);
+            border-left: 4px solid var(--neutral-gray);
+        }
+
+        .card-bg-7 {
+            background: var(--card-7);
+            border-left: 4px solid var(--neutral-gray);
+        }
+
+        .card-bg-8 {
+            background: var(--card-8);
+            border-left: 4px solid var(--neutral-gray);
+        }
+
+        .card-bg-9 {
+            background: var(--card-9);
             border-left: 4px solid var(--neutral-gray);
         }
 
@@ -92,10 +136,10 @@
         }
 
         .container {
-            max-width: 95vw;
+            max-width: 97vw;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             backdrop-filter: blur(10px);
@@ -106,8 +150,8 @@
             justify-content: space-between;
             align-items: center;
             padding-bottom: 1.5rem;
-            border-bottom: 2px solid #f0f0f0;
-            margin-bottom: 2rem;
+            border-bottom: 2px solid #bdbdbb;
+            margin-bottom: 1rem;
         }
 
         .header h5 {
@@ -124,7 +168,8 @@
         }
 
         .card {
-            min-height: 38vh;
+            /* min-height: 38vh; */
+            min-height: 27vh;
             border: none;
             border-radius: 15px;
             transition: all 0.3s ease;
@@ -143,7 +188,8 @@
 
         .card h1 {
             position: absolute;
-            top: 45%;  /* Adjusted from 50% to make room for h3 */
+            top: 50%;
+            /* Adjusted from 50% to make room for h3 */
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 3.5rem;
@@ -155,14 +201,27 @@
             text-align: center;
         }
 
-        /* Untuk memastikan h2 tidak tumpang tindih dengan h1 */
-        .card h2 {
+        /* Informasi ruangan */
+        .card .room-info {
             position: absolute;
             top: 1rem;
             left: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card .nama-ruangan {
             font-size: 1.8rem;
             font-weight: 700;
             color: #2c3e50;
+            margin: 0;
+            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+        }
+
+        .card .nama-operator {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-secondary);
             margin: 0;
             text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
         }
@@ -174,7 +233,7 @@
             transform: translateX(-50%);
             font-size: 1.2rem;
             font-weight: 500;
-            color: var(--text-secondary);
+            color: black;
             margin: 0;
             width: 90%;
             text-align: center;
@@ -183,27 +242,51 @@
         }
 
         /* Status indicators */
-        .status-indicator {
+        .indicator-wrapper {
             position: absolute;
             top: 1rem;
             right: 1rem;
-            width: 12px;
-            height: 12px;
+            display: flex;
+        }
+
+        .indicator-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-right: .5rem;
+            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+        }
+
+        .indicator-status {
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
+            animation: pulse 2s infinite;
+            margin-top: 4px;
+        }
+
+        .indicator-status.active {
             background-color: #4CAF50;
             box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-            animation: pulse 2s infinite;
         }
+
+        .indicator-status.maintenance {
+            background-color: #b22222;
+            box-shadow: 0 0 10px rgba(178, 34, 34, 0.5);
+        }
+
 
         @keyframes pulse {
             0% {
                 transform: scale(1);
                 opacity: 1;
             }
+
             50% {
                 transform: scale(1.2);
                 opacity: 0.8;
             }
+
             100% {
                 transform: scale(1);
                 opacity: 1;
@@ -240,11 +323,14 @@
             #tanggal-hari {
                 font-size: 1rem;
             }
-           
         }
 
         /* Add smooth transitions */
-        .card, .card h1, .card h2, .card h5{
+        .card,
+        .card h1,
+        .card h2,
+        .card h3,
+        .card h5 {
             transition: all 0.3s ease-in-out;
         }
 
@@ -254,6 +340,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -270,12 +357,13 @@
         }
     </style>
 
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="container">
         <div class="header d-flex align-items-center justify-content-between w-100 p-3">
             <div class="d-flex align-items-center gap-2">
-                <img src="{{ asset('img/logo-rsui.png')}}" alt="logoRSUI" style="width: 35px; height: auto;">
+                <img src="{{ asset('img/logo-rsui.png') }}" alt="logoRSUI" style="width: 35px; height: auto;">
                 <h5 class="mb-0">Monitor Ruang Operasi</h5>
             </div>
             <h5 class="mb-0" id="tanggal-hari"></h5>
@@ -283,51 +371,60 @@
 
         <div class="row justify-content-center">
             @foreach ($rooms as $room)
-            <div class="col-md-4 mt-4">
-                <div class="card card-bg-{{$loop->iteration}}" id="card-{{$room->id}}">
-                    <div class="status-indicator"></div>
-                    <div class="card-body">
-                        <h2>{{$room->nama_ruangan}}</h2>
-                        <h1 class="text-center" id="responseMessage{{$room->id}}">{{$room->status_operasi}}</h1>
-                        <h5 class="text-center" id="updatedTime{{$room->id}}">Diperbarui Sejak: {{ \Carbon\Carbon::parse($room->updated_at)->format('d/m/Y H:i:s') }} </h5>
+                <div class="col-md-4 mt-4">
+                    <div class="card card-bg-{{ $loop->iteration }}" id="card-{{ $room->id }}">
+                        <div class="indicator-wrapper">
+                            <h2 class="indicator-text">{{ $room->is_active ? '' : '(Maintenance)' }}</h2>
+                            <div class="indicator-status {{ $room->is_active ? 'active' : 'maintenance' }}"></div>
+                        </div>
+                        <div class="card-body">
+                            <div class="room-info">
+                                <h2 class="nama-ruangan">{{ $room->nama_ruangan }}</h2>
+                                <h2 class="nama-operator">nama operator disini</h2>
+                            </div>
+                            <h1 class="text-center" id="responseMessage{{ $room->id }}">{{ $room->status_operasi }}
+                            </h1>
+                            <h5 class="text-center" id="updatedTime{{ $room->id }}">Diperbarui Sejak:
+                                {{ \Carbon\Carbon::parse($room->updated_at)->format('d/m/Y H:i:s') }} </h5>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
-            </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script>
+        function updateClock() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
 
-    function updateClock() {
-        const now = new Date();
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const year = now.getFullYear();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
+            const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('tanggal-hari').innerHTML = formattedTime;
+        }
 
-        const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-        document.getElementById('tanggal-hari').innerHTML = formattedTime;
-    }
+        // Update setiap detik
+        setInterval(updateClock, 1000);
+        // Panggil sekali untuk menghindari delay 1 detik pertama
+        updateClock();
 
-    // Update setiap detik
-    setInterval(updateClock, 1000);
-    // Panggil sekali untuk menghindari delay 1 detik pertama
-    updateClock();
+        function toTitleCase(str) {
+            return str
+                .toLowerCase() // Ubah semua huruf menjadi huruf kecil terlebih dahulu
+                .split(' ') // Pisahkan string berdasarkan spasi
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Ubah huruf pertama menjadi besar
+                .join(' '); // Gabungkan kembali menjadi string dengan spasi
+        }
 
-    function toTitleCase(str) {
-        return str
-        .toLowerCase()  // Ubah semua huruf menjadi huruf kecil terlebih dahulu
-        .split(' ')     // Pisahkan string berdasarkan spasi
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Ubah huruf pertama menjadi besar
-        .join(' ');     // Gabungkan kembali menjadi string dengan spasi
-    }
-
-     document.addEventListener('DOMContentLoaded', function () {
-            const rooms = @json($rooms);  // Data Laravel
+        document.addEventListener('DOMContentLoaded', function() {
+            const rooms = @json($rooms); // Data Laravel
 
             // Loop melalui setiap room dan atur listener Echo
             rooms.forEach(room => {
@@ -342,7 +439,7 @@
                 // Pastikan elemen ditemukan
                 if (!elementStatusKamar) {
                     console.error(`Element for room ${room.id} not found!`);
-                    return;  // Hentikan jika elemen tidak ditemukan
+                    return; // Hentikan jika elemen tidak ditemukan
                 }
 
                 // Set listener untuk setiap channel Echo
@@ -352,20 +449,17 @@
 
                         // Buat elemen pesan baru
                         elementStatusKamar.innerHTML = `${toTitleCase(e.status)}`;
-
                         elementUpdatedTime.innerHTML = `Diperbarui Sejak: ${e.updatedAt}`;
-
                         elementCard.classList.add('card-active-hover');
 
                         // Hapus class hover setelah 3 detik
                         setTimeout(() => {
                             elementCard.classList.remove('card-active-hover');
                         }, 3000); // 3000ms = 3 detik
-                      
+
                     });
             });
         });
-   
 
         function tampilkanHariTanggal() {
             // Membuat objek Date untuk mendapatkan tanggal dan waktu sekarang
@@ -375,7 +469,9 @@
             const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
             // Array untuk nama bulan (0 untuk Januari, 1 untuk Februari, dst.)
-            const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
+                "Oktober", "November", "Desember"
+            ];
 
             // Mengambil komponen tanggal
             const hari = sekarang.getDay(); // Mengambil hari (0-6)
@@ -411,6 +507,7 @@
         //     // updateSemuaStatus(); // Memperbarui status pada setiap kartu
         // }
     </script>
-    
-  </body>
+
+</body>
+
 </html>
