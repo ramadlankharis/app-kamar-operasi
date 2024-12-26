@@ -374,12 +374,14 @@
                 <div class="col-md-4 mt-4">
                     <div class="card card-bg-{{ $loop->iteration }}" id="card-{{ $room->id }}">
                         <div class="indicator-wrapper">
-                            <h2 class="indicator-text" id="indicatorText{{ $room->id }}">{{ $room->is_active ? '' : '(Maintenance)' }}</h2>
+                            <h2 class="indicator-text" id="indicatorText{{ $room->id }}">
+                                {{ $room->is_active ? '' : '(Maintenance)' }}
+                            </h2>
                             <div class="indicator-status {{ $room->is_active ? 'active' : 'maintenance' }}" id="indicatorStatus{{ $room->id }}"></div>
                         </div>
                         <div class="card-body">
                             <div class="room-info">
-                                <h2 class="nama-ruangan">{{ $room->nama_ruangan }}</h2>
+                                <h2 class="nama-ruangan" id="roomName{{ $room->nama_ruangan }}">{{ $room->nama_ruangan }}</h2>
                                 <h2 class="nama-operator">nama operator disini</h2>
                             </div>
                             <h1 class="text-center" id="responseMessage{{ $room->id }}">{{ $room->status_operasi }}
@@ -431,6 +433,7 @@
                 console.log(room.id);
 
                 // Ambil elemen messages berdasarkan ID room
+                const elementRoomName = document.getElementById(`roomName${room.nama_ruangan}`);
                 const elementStatusKamar = document.getElementById(`responseMessage${room.id}`);
                 const elementUpdatedTime = document.getElementById(`updatedTime${room.id}`);
                 const elementIndicatorText = document.getElementById(`indicatorText${room.id}`);
@@ -452,11 +455,18 @@
                         // Buat elemen pesan baru
                         elementStatusKamar.innerHTML = `${toTitleCase(e.status)}`;
                         elementUpdatedTime.innerHTML = `Diperbarui Sejak: ${e.updatedAt}`;
-                        elementIndicatorText.innerHTML = e.isActive ? '' : '(Maintenance)';
-                        elementIndicatorStatus.classList.toggle('active', e.isActive);
-                        elementIndicatorStatus.classList.toggle('maintenance', !e.isActive);
-                        elementCard.classList.add('card-active-hover');
+                        elementRoomName.innerHTML = e.roomName;
+                        elementIndicatorText.innerHTML = e.roomIsActive;
+                        elementIndicatorText.innerHTML = e.roomIsActive === '1' ? '' : '(Maintenance)';
+                        if (e.roomIsActive === '1') {
+                            elementIndicatorStatus.classList.remove('maintenance');
+                            elementIndicatorStatus.classList.add('active');
+                        } else {
+                            elementIndicatorStatus.classList.remove('active');
+                            elementIndicatorStatus.classList.add('maintenance');
+                        }
 
+                        elementCard.classList.add('card-active-hover');
                         // Hapus class hover setelah 3 detik
                         setTimeout(() => {
                             elementCard.classList.remove('card-active-hover');
