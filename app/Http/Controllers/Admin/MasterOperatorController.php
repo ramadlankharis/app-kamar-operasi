@@ -54,7 +54,7 @@ class MasterOperatorController extends Controller
         $kamar = DisplayOk::where('id_operator', '=', $id)->first();
         if ($kamar) {
             return redirect()->route('admin.master-operator.index')
-                             ->with('danger', 'Data operator tidak dapat di ubah, sedang berada di kamar operasi.');
+                             ->with('danger', 'Data operator tidak dapat di ubah, sedang digunakan di kamar operasi.');
         }
 
         // Get operator properties and operator name
