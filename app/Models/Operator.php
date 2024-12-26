@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Operator extends Model
 {
     protected $fillable = [
-        'name',
+        'nama',
         'nip',
     ];
 }
