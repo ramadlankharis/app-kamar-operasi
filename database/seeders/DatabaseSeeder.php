@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             RefStatusOperasi::class,
             RolePermissionSeeder::class,
             UserSeeder::class,
+            OperatorSeeder::class
         ]);
     }
 }
