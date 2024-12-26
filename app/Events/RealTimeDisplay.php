@@ -17,15 +17,17 @@ class RealTimeDisplay implements ShouldBroadcast
     public $status;
     public $idDisplay;
     public $updated_at;
+    public $roomIsActive;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($status, $id, $updated_at)
+    public function __construct($status, $id, $updated_at, $roomIsActive)
     {
         $this->status = $status;
         $this->idDisplay = $id;
         $this->updated_at = $updated_at;
+        $this->roomIsActive = $roomIsActive;
     }
 
     /**
@@ -44,7 +46,8 @@ class RealTimeDisplay implements ShouldBroadcast
         return [
             'status' => $this->status,
             'idDisplay' => $this->idDisplay,
-            'updatedAt' => $this->updated_at
+            'updatedAt' => $this->updated_at,
+            'roomIsActive' => $this->roomIsActive
         ];
     }
 

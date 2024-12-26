@@ -374,8 +374,8 @@
                 <div class="col-md-4 mt-4">
                     <div class="card card-bg-{{ $loop->iteration }}" id="card-{{ $room->id }}">
                         <div class="indicator-wrapper">
-                            <h2 class="indicator-text">{{ $room->is_active ? '' : '(Maintenance)' }}</h2>
-                            <div class="indicator-status {{ $room->is_active ? 'active' : 'maintenance' }}"></div>
+                            <h2 class="indicator-text" id="indicatorText{{ $room->id }}">{{ $room->is_active ? '' : '(Maintenance)' }}</h2>
+                            <div class="indicator-status {{ $room->is_active ? 'active' : 'maintenance' }}" id="indicatorStatus{{ $room->id }}"></div>
                         </div>
                         <div class="card-body">
                             <div class="room-info">
@@ -433,6 +433,8 @@
                 // Ambil elemen messages berdasarkan ID room
                 const elementStatusKamar = document.getElementById(`responseMessage${room.id}`);
                 const elementUpdatedTime = document.getElementById(`updatedTime${room.id}`);
+                const elementIndicatorText = document.getElementById(`indicatorText${room.id}`);
+                const elementIndicatorStatus = document.getElementById(`indicatorStatus${room.id}`);
                 const elementCard = document.getElementById(`card-${room.id}`);
 
 
@@ -450,6 +452,9 @@
                         // Buat elemen pesan baru
                         elementStatusKamar.innerHTML = `${toTitleCase(e.status)}`;
                         elementUpdatedTime.innerHTML = `Diperbarui Sejak: ${e.updatedAt}`;
+                        elementIndicatorText.innerHTML = e.isActive ? '' : '(Maintenance)';
+                        elementIndicatorStatus.classList.toggle('active', e.isActive);
+                        elementIndicatorStatus.classList.toggle('maintenance', !e.isActive);
                         elementCard.classList.add('card-active-hover');
 
                         // Hapus class hover setelah 3 detik

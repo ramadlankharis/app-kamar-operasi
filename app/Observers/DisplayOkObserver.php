@@ -32,7 +32,7 @@ class DisplayOkObserver
         $formattedupdateAt = Carbon::parse($updateAt)->format('d/m/Y H:i:s');
 
         // dispatch event
-        RealTimeDisplay::dispatch($data->status_operasi, $displayOk->id, $formattedupdateAt);
+        RealTimeDisplay::dispatch($data->status_operasi, $displayOk->id, $formattedupdateAt, $displayOk->is_active);
         Log::info('DisplayOk updated '. $data->status_operasi);
     }
 
