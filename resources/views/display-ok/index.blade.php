@@ -149,7 +149,7 @@
             max-width: 97vw;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.95);
-            padding: 1.5rem;
+            padding: 1rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             backdrop-filter: blur(10px);
@@ -161,7 +161,6 @@
             align-items: center;
             padding-bottom: 1.5rem;
             border-bottom: 2px solid #bdbdbb;
-            margin-bottom: 1rem;
         }
 
         .header h5 {
@@ -179,7 +178,7 @@
 
         .card {
             /* min-height: 38vh; */
-            min-height: 27vh;
+            min-height: 25.5vh;
             border: none;
             border-radius: 15px;
             transition: all 0.3s ease;
@@ -202,7 +201,7 @@
             /* Adjusted from 50% to make room for h3 */
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3.5rem;
+            font-size: 2rem;
             font-weight: 700;
             margin: 0;
             color: #2c3e50;
@@ -223,7 +222,7 @@
         }
 
         .card .nama-ruangan {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: #2c3e50;
             margin: 0;
@@ -231,7 +230,7 @@
         }
 
         .card .nama-operator {
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--text-secondary);
             margin: 0;
@@ -243,7 +242,7 @@
             bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 1.2rem;
+            font-size: .9rem;
             font-weight: 500;
             color: black;
             margin: 0;
@@ -262,7 +261,7 @@
         }
 
         .indicator-text {
-            font-size: 1.2rem;
+            font-size: .8rem;
             font-weight: 700;
             color: #2c3e50;
             margin-right: .5rem;
@@ -270,11 +269,11 @@
         }
 
         .indicator-status {
-            width: 16px;
-            height: 16px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             animation: pulse 2s infinite;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .indicator-status.active {
