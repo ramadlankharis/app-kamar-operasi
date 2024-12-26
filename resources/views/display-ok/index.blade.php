@@ -79,6 +79,16 @@
             /* Light blue-gray for tertiary text */
         }
 
+        .card.card-disabled .room-info h2,
+        .card.card-disabled h1,
+        .card.card-disabled h5 {
+            color: #aeaeae !important;
+        }
+        .card.card-disabled {
+            background: #e5e5e5;
+        }
+
+
         /* Example usage in cards */
         .card-bg-1 {
             background: var(--card-1);
@@ -200,6 +210,8 @@
             width: 100%;
             text-align: center;
         }
+
+
 
         /* Informasi ruangan */
         .card .room-info {
@@ -372,7 +384,7 @@
         <div class="row justify-content-center">
             @foreach ($rooms as $room)
                 <div class="col-md-4 mt-4">
-                    <div class="card card-bg-{{ $loop->iteration }}" id="card-{{ $room->id }}">
+                    <div class="card card-bg-{{ $loop->iteration }} card-{{$room->is_active ? "active" : "disabled" }}" id="card-{{ $room->id }}">
                         <div class="indicator-wrapper">
                             <h2 class="indicator-text" id="indicatorText{{ $room->id }}">
                                 {{ $room->is_active ? '' : '(Maintenance)' }}
@@ -382,7 +394,7 @@
                         <div class="card-body">
                             <div class="room-info">
                                 <h2 class="nama-ruangan" id="roomName{{ $room->nama_ruangan }}">{{ $room->nama_ruangan }}</h2>
-                                <h2 class="nama-operator">nama operator disini</h2>
+                                <h2 class="nama-operator" id="operatorName{{ $room->nama_ruangan }}">{{ $room->nama_operator  }}</h2>
                             </div>
                             <h1 class="text-center" id="responseMessage{{ $room->id }}">{{ $room->status_operasi }}
                             </h1>
@@ -434,12 +446,12 @@
 
                 // Ambil elemen messages berdasarkan ID room
                 const elementRoomName = document.getElementById(`roomName${room.nama_ruangan}`);
+                const elementOperatorName = document.getElementById(`operatorName${room.nama_ruangan}`);
                 const elementStatusKamar = document.getElementById(`responseMessage${room.id}`);
                 const elementUpdatedTime = document.getElementById(`updatedTime${room.id}`);
                 const elementIndicatorText = document.getElementById(`indicatorText${room.id}`);
                 const elementIndicatorStatus = document.getElementById(`indicatorStatus${room.id}`);
                 const elementCard = document.getElementById(`card-${room.id}`);
-
 
                 // Pastikan elemen ditemukan
                 if (!elementStatusKamar) {
@@ -454,6 +466,7 @@
 
                         // Buat elemen pesan baru
                         elementStatusKamar.innerHTML = `${toTitleCase(e.status)}`;
+                        elementOperatorName.innerHTML = e.operatorName;
                         elementUpdatedTime.innerHTML = `Diperbarui Sejak: ${e.updatedAt}`;
                         elementRoomName.innerHTML = e.roomName;
                         elementIndicatorText.innerHTML = e.roomIsActive;
@@ -461,9 +474,13 @@
                         if (e.roomIsActive === '1') {
                             elementIndicatorStatus.classList.remove('maintenance');
                             elementIndicatorStatus.classList.add('active');
+                            elementCard.classList.remove('card-disabled');
+                            elementCard.classList.add('card-active');
                         } else {
                             elementIndicatorStatus.classList.remove('active');
                             elementIndicatorStatus.classList.add('maintenance');
+                            elementCard.classList.remove('card-active');
+                            elementCard.classList.add('card-disabled');
                         }
 
                         elementCard.classList.add('card-active-hover');
@@ -471,7 +488,6 @@
                         setTimeout(() => {
                             elementCard.classList.remove('card-active-hover');
                         }, 3000); // 3000ms = 3 detik
-
                     });
             });
         });

@@ -12,7 +12,8 @@ class DisplayKamarOkController extends Controller
     {
         $rooms = DisplayOk::from('display_oks as dok')
         ->join('ref_status_operasis as rso', 'dok.squence_status_operasi', '=', 'rso.squence_status_operasi')
-        ->select('dok.*', 'rso.status_operasi')
+        ->leftJoin('operators as op', 'dok.id_operator', '=', 'op.id')
+        ->select('dok.*', 'rso.status_operasi', 'op.nama as nama_operator')
         ->orderBy('dok.id', 'asc')
         ->get()
         ->map(function($room) {
