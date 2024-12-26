@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardMonitorController;
 use App\Http\Controllers\DisplayKamarOkController;
+use App\Http\Controllers\Admin\MasterOperatorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SendMessageController;
 use Illuminate\Support\Facades\Route;
@@ -88,7 +89,13 @@ Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(funct
         Route::get('/master-ok/{id}/edit', [MasterOkController::class, 'edit'])->name('admin.master-ok.edit');
         Route::put('/master-ok/{id}', [MasterOkController::class, 'update'])->name('admin.master-ok.update');
 
-
+        // Master Operator
+        Route::get('/master-operator', [MasterOperatorController::class, 'index'])->name('admin.master-operator.index');
+        Route::get('/master-operator/create', [MasterOperatorController::class, 'create'])->name('admin.master-operator.create');
+        Route::post('/master-operator/store', [MasterOperatorController::class, 'store'])->name('admin.master-operator.store');
+        Route::get('/master-operator/{id}/edit', [MasterOperatorController::class, 'edit'])->name('admin.master-operator.edit');
+        Route::put('/master-operator/{id}', [MasterOperatorController::class, 'update'])->name('admin.master-operator.update');
+        Route::delete('/master-operator/{id}', [MasterOperatorController::class, 'destroy'])->name('admin.master-operator.destroy');
     });
     // end middleware admin
 
