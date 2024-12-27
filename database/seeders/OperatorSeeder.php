@@ -13,7 +13,7 @@ class OperatorSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 1; $i <= 6; $i++) {
+        for($i = 1; $i <= 30; $i++) {
             Operator::create([
                 'nama' => 'Dr. '.fake()->name(),
             ]);

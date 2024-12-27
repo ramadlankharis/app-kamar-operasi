@@ -26,6 +26,21 @@ class MasterOperatorController extends Controller
         return view('admin.operator.index', compact('dataOperator'));
     }
 
+    public function search(Request $request)
+    {
+        $cari_operator = $request->cari_operator;
+
+        if (empty($cari_operator)) {
+            $dataOperator = Operator::orderBy('id', 'asc')->paginate(10);
+        } else {
+            $dataOperator = Operator::where('nama', 'LIKE', "%". $cari_operator ."%")
+                                      ->orderBy('id', 'asc')
+                                      ->paginate(10);
+        }
+
+        return view('admin.operator.index', compact('dataOperator'));
+    }
+
     public function create()
     {
         // return view create operator

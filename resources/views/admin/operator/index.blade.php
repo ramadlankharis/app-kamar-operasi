@@ -16,7 +16,7 @@
 .add-btn {
     background: linear-gradient(45deg, #3498db, #2980b9);
     color: white;
-    padding: 8px 20px;
+    padding: 5px 15px;
     border: none;
     border-radius: 50px;
     font-weight: 600;
@@ -44,6 +44,8 @@
     transition: transform 0.3s ease;
 }
 
+
+
 .reorder-btn {
     background: linear-gradient(45deg, #2ecc71, #27ae60);
     color: white;
@@ -63,6 +65,27 @@
     box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
     color: white;
 }
+
+.search-btn {
+    background: linear-gradient(45deg, #ffce07, #f58020);
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    background: linear-gradient(45deg, #f58020, #ffce07);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+    color: white;
+}
+
 .badges {
     display: flex;
     flex-direction: column;
@@ -144,8 +167,18 @@
                 @endif
 
                 <div class="row">
-                    <div class="col-md-12 d-flex justify-content-end">
+                    <div class="col-md-12 d-flex justify-content-between">
                         {{-- <a href="{{ route('admin.master-status-operasi.reorder.index') }}" class="reorder-btn btn-sm mr-2">  ☰ Edit Urutan</a> --}}
+                        <form action="{{ route('admin.master-operator.search') }}" method="get">
+                            <div class="input-group mb-3">
+                                <input type="text" name="cari_operator" class="form-control" placeholder="Cari operator" aria-label="Cari operator" aria-describedby="basic-addon2">
+                                <div class="input-group-append ml-1">
+                                    <button class="btn search-btn" type="submit">
+                                        <i class="fas fa-search mr-1"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                         <a href="{{ route('admin.master-operator.create') }}" class="add-btn">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
                                 <g id="SVGRepo_iconCarrier">
@@ -194,6 +227,14 @@
                                 </tr>
                                 @endforeach
                         </table>
+                        <div class="mt-5">
+                            <div class="d-flex justify-content-between px-4">
+                                <p>Menampilkan {{ $dataOperator->firstItem() }} sampai {{ $dataOperator->lastItem() }} dari {{ $dataOperator->total() }} data</p>
+                                <nav aria-label="Page navigation example">
+                                    {{ $dataOperator->links() }}
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

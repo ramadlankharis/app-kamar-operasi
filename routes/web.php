@@ -91,6 +91,7 @@ Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(funct
 
         // Master Operator
         Route::get('/master-operator', [MasterOperatorController::class, 'index'])->name('admin.master-operator.index');
+        Route::get('/master-operator/search', [MasterOperatorController::class, 'search'])->name('admin.master-operator.search');
         Route::get('/master-operator/create', [MasterOperatorController::class, 'create'])->name('admin.master-operator.create');
         Route::post('/master-operator/store', [MasterOperatorController::class, 'store'])->name('admin.master-operator.store');
         Route::get('/master-operator/{id}/edit', [MasterOperatorController::class, 'edit'])->name('admin.master-operator.edit');
