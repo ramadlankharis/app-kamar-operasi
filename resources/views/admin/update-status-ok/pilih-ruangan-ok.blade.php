@@ -40,14 +40,14 @@
                 <div class="card-header bg-gradient-primary py-3">
                     <h5 class="mb-0 text-white ">
                         <i class="fas fa-door-open mr-2"></i>
-                        Pilih Ruangan
+                        Update Status Ruangan
                     </h5>
                 </div>
 
                 <div class="card-body bg-light">
                     <div class="card-title mb-4">
                         <h3 class="text-center title-2 text-primary">
-                            Update Status Ruangan
+                            Pilih Ruangan
                         </h3>
                     </div>
 
@@ -83,14 +83,6 @@
                             </a>
                         </div>
                     </div>
-                </div>
-
-                <!-- Card Footer -->
-                <div class="card-footer text-center text-muted py-3">
-                    <small>
-                        <i class="fas fa-clock mr-1"></i>
-                        Status ruangan terakhir diperbarui: <span id="lastUpdate">Hari ini</span>
-                    </small>
                 </div>
             </div>
         </div>

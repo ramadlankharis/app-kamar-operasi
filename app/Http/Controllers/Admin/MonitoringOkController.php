@@ -63,8 +63,7 @@ class MonitoringOkController extends Controller
     public function pilihOperatorOk(string $id)
     {
         $room = DisplayOk::findOrFail($id);
-        $operators = Operator::select('id', 'nama', 'is_available')->orderBy('id', 'asc')->get();
-        return view('admin.update-status-ok.pilih-operator-ok', compact('operators', 'room'));
+        return view('admin.update-status-ok.pilih-operator-ok', compact('room'));
     }
 
     /**
@@ -96,6 +95,35 @@ class MonitoringOkController extends Controller
         return view('admin.update-status-ok.edit', compact('kamar', 'titleCaseStatusKamar', 'namaRuangan', 'sequences'));
     }
 
+
+    // Fetch operator
+    // 2 cara:
+    // 1. scroll dropdown, fetch data dari database dengan pagination nanti di front endnya data yang
+    //    diperoleh kita append ke dropdown. Lalu apabila ada next page, kita bisa fetch lagi
+    // 2. Searching, fetch data dari database dengan query search
+    public function ajaxFetchOperator(Request $request )
+    {
+        // check if from scrolling or not
+        $fromScroll = $request->from_scroll;
+
+        if ($fromScroll) {
+            $page = $request->page;
+            $operators = Operator::select('id', 'nama', 'is_available')
+                ->orderBy('id', 'asc')
+                ->paginate(10, ['*'], 'page', $page); // fetch by page
+
+            return response()->json(['data' => $operators, 'success' => true]);
+        } else {
+            // searching
+            $search = $request->search;
+            $operators = Operator::select('id', 'nama', 'is_available')
+                ->where('nama', 'ILIKE', '%' . $search . '%')
+                ->orderBy('id', 'asc')
+                ->get();
+
+            return response()->json(['data' => $operators, 'success' => true]);
+        }
+    }
 
     public function ajaxChangeOperator(Request $request, string $id)
     {

@@ -106,6 +106,8 @@ Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(funct
         Route::get('/pilih-ruangan/ok/{id}/operator', [MonitoringOkController::class, 'pilihOperatorOk'])->name('index.pilih.operator.ok');
         Route::get('/update-status-ruangan/{id}/edit', [MonitoringOkController::class, 'edit'])->name('admin.monitoring.edit');
         Route::put('/update-status-ruangan/{id}', [MonitoringOkController::class, 'updateRuangan'])->name('admin.monitoring.update');
+        // ajax fetch data
+        Route::get('/ajax/fetch-operator', [MonitoringOkController::class, 'ajaxFetchOperator'])->name('admin.monitoring.ajax.fetch.operator');
         // ajax Update Status OK
         Route::put('/ajax/update-status-operator/{id}', [MonitoringOkController::class, 'ajaxChangeOperator'])->name('admin.monitoring.ajax.operator');
         Route::put('/ajax/update-status-ruangan-next/{id}', [MonitoringOkController::class, 'ajaxNextStep'])->name('admin.monitoring.ajax.next.step');
