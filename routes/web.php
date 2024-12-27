@@ -110,6 +110,7 @@ Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(funct
         Route::put('/ajax/update-status-operator/{id}', [MonitoringOkController::class, 'ajaxChangeOperator'])->name('admin.monitoring.ajax.operator');
         Route::put('/ajax/update-status-ruangan-next/{id}', [MonitoringOkController::class, 'ajaxNextStep'])->name('admin.monitoring.ajax.next.step');
         Route::put('/ajax/update-status-ruangan-back/{id}', [MonitoringOkController::class, 'ajaxBackStep'])->name('admin.monitoring.ajax.back.step');
+        Route::put('/ajax/update-status-ruangan-finish/{id}', [MonitoringOkController::class, 'ajaxFinishStep'])->name('admin.monitoring.ajax.finish.step');
     });
     // end middleware operator
 

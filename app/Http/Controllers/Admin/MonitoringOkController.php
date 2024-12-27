@@ -73,7 +73,11 @@ class MonitoringOkController extends Controller
     public function edit(string $id)
     {
         // return $id;
-        $kamar = DisplayOk::findOrFail($id);
+        // $kamar = DisplayOk::findOrFail($id);
+        $kamar = DisplayOk::select('display_oks.*', 'operators.nama')
+                            ->join('operators', 'display_oks.id_operator', '=', 'operators.id')
+                            ->where('display_oks.id', $id)
+                            ->first();
 
         $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
 
@@ -91,9 +95,13 @@ class MonitoringOkController extends Controller
             return $sequence;
         });
 
-        $namaRuangan = Str::title($kamar->nama_ruangan);
+        $firstSequence =RefStatusOperasi::orderBy('squence_status_operasi', 'asc')->first();
+        $lastSequence = RefStatusOperasi::orderBy('squence_status_operasi', 'desc')->first();
 
-        return view('admin.update-status-ok.edit', compact('kamar', 'titleCaseStatusKamar', 'namaRuangan', 'sequences'));
+        $namaRuangan = Str::title($kamar->nama_ruangan);
+        $namaOperator = Str::title($kamar->nama);
+
+        return view('admin.update-status-ok.edit', compact('kamar', 'titleCaseStatusKamar', 'namaRuangan', 'namaOperator', 'sequences', 'firstSequence', 'lastSequence'));
     }
 
 
@@ -124,28 +132,37 @@ class MonitoringOkController extends Controller
 
     public function ajaxFinishStep(Request $request, string $id)
     {
-        // get operator id from request body
-        $operatorId = $request->operator_id;
-        if (!$operatorId) {
-            return response()->json(['message' => 'operator id diperlukan', 'success' => false]);
+        if ($request->step == 'finish') {
+            // get operator id from request body
+            // $operatorId = $request->operator_id;
+            // if (!$operatorId) {
+            //     return response()->json(['message' => 'operator id diperlukan', 'success' => false]);
+            // }
+
+            // get room by id and first sequence
+            $room = DisplayOk::findOrFail($id);
+            $idOperator = $room->id_operator;
+            $firstSequence =RefStatusOperasi::orderBy('squence_status_operasi', 'asc')->first();
+
+            // set id_operator to null
+            $room->id_operator = null;
+            $room->squence_status_operasi = $firstSequence->squence_status_operasi;
+            $room->save();
+
+            $currentOpId = Auth::id();
+            $this->logger->info('Emptying Operator', [
+                'id_ruangan' => $id,
+                'nama_ruangan' => $room->nama_ruangan,
+                'id_operator' => $idOperator,
+                'current_operator_id' => $currentOpId
+            ]);
+
+            return response()->json([
+                'message' => 'Tahapan telah selesai.'
+            ]);
         }
 
-        // get room by id
-        $room = DisplayOk::findOrFail($id);
-
-        // set id_operator to null
-        $room->id_operator = null;
-        $room->save();
-
-        $currentOpId = Auth::id();
-        $this->logger->info('Emptying Operator', [
-            'id_ruangan' => $id,
-            'nama_ruangan' => $room->nama_ruangan,
-            'id_operator' => $operatorId,
-            'current_operator_id' => $currentOpId
-        ]);
-
-        return response()->json(['message' => 'Operator berhasil dikosongkan', 'id_operator' => null, 'success' => true]);
+        return response()->json(['message' => 'bukan finish kah?']);
     }
 
     public function ajaxNextStep(Request $request, string $id)
