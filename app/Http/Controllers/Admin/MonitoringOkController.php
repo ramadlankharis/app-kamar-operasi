@@ -78,6 +78,11 @@ class MonitoringOkController extends Controller
                             ->where('display_oks.id', $id)
                             ->first();
 
+
+        if (is_null($kamar)) {
+            return redirect()->route('index.pilih.operator.ok', $id);
+        }
+
         $statusKamar = RefStatusOperasi::where('squence_status_operasi', '=',  $kamar->squence_status_operasi)->first();
 
         if (!$statusKamar) {

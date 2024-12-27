@@ -44,8 +44,6 @@
     transition: transform 0.3s ease;
 }
 
-
-
 .reorder-btn {
     background: linear-gradient(45deg, #2ecc71, #27ae60);
     color: white;
@@ -173,7 +171,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" name="cari_operator" class="form-control" placeholder="Cari operator" aria-label="Cari operator" aria-describedby="basic-addon2">
                                 <div class="input-group-append ml-1">
-                                    <button class="btn search-btn" type="submit">
+                                    <button class="search-btn" type="submit">
                                         <i class="fas fa-search mr-1"></i> Search
                                     </button>
                                 </div>

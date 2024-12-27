@@ -33,7 +33,7 @@ class MasterOperatorController extends Controller
         if (empty($cari_operator)) {
             $dataOperator = Operator::orderBy('id', 'asc')->paginate(10);
         } else {
-            $dataOperator = Operator::where('nama', 'LIKE', "%". $cari_operator ."%")
+            $dataOperator = Operator::where('nama', 'ILIKE', "%". $cari_operator ."%")
                                       ->orderBy('id', 'asc')
                                       ->paginate(10);
         }
