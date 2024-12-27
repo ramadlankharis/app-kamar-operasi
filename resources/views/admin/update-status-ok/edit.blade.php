@@ -48,6 +48,26 @@
     color: white;
 }
 
+.finish-btn {
+    background: linear-gradient(45deg, #ffce07, #f58020);
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    transition: all 0.3s ease;
+}
+
+.finish-btn:hover {
+    background: linear-gradient(45deg, #f58020, #ffce07);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+    color: white;
+}
+
 /* Optional: Add active state effect */
 .back-btn:active, .next-btn:active {
     transform: translateY(1px);
@@ -55,7 +75,7 @@
 }
 
 /* Optional: Add disabled state styles */
-.back-btn:disabled, .next-btn:disabled {
+.back-btn:disabled, .next-btn:disabled, .finish-btn:disabled {
     background: #cccccc;
     cursor: not-allowed;
     box-shadow: none;
@@ -79,6 +99,10 @@
 
 .next-btn:hover i {
     transform: translateX(3px);
+}
+
+.finish-btn:hover i {
+    transform: translateY(-3px);
 }
 
 /* Status Title Styling */
@@ -188,13 +212,13 @@
     cursor: pointer;
 }
 
-.step-circle.active {
+.step.active .step-circle {
     background: #3b82f6;
     color: white;
     animation: pulse 2s infinite;
 }
 
-.step-circle.completed {
+.step.completed .step-circle {
     background: #10b981;
     color: white;
     animation: completedPop 0.5s ease;
@@ -274,6 +298,10 @@
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
+}
+
+.text-operator {
+    color: #224abe;
 }
 
 /* Enhanced Animations */
@@ -386,6 +414,9 @@
                         <h1 class="text-center title-1 text-primary">
                             {{ $namaRuangan }}
                         </h1>
+                        <h2 class="text-center title-3 text-operator">
+                            {{ $namaOperator }}
+                        </h2>
                     </div>
                 </div>
 
@@ -407,10 +438,14 @@
 
                     <!-- Button dengan hover effect -->
                     <div class="mt-5">
-                        <div class="d-flex justify-content-between px-4">
+                        <div class="d-flex justify-content-between">
                             <button class="btn back-btn" id="backStep">
                                 <i class="fas fa-arrow-left mr-2"></i>
                                 Back
+                            </button>
+                            <button class="btn finish-btn" id="finishStep">
+                                Finish
+                                <i class="fas fa-check ml-2"></i>
                             </button>
                             <button class="btn next-btn" id="nextStep">
                                 Next
@@ -458,7 +493,8 @@ $(document).ready(function() {
     }));
 
     let currentStep = {{ $kamar->squence_status_operasi }} - 1; // Sesuaikan dengan status operasi saat ini
-
+    let firstStep = {{ $firstSequence->squence_status_operasi }} - 1; // Mendapatkan step paling awal
+    let lastStep = {{ $lastSequence->squence_status_operasi }} - 1; // Mendapatkan step paling akhir
 
         function createSteps() {
             const container = document.getElementById('stepsContainer');
@@ -484,6 +520,7 @@ $(document).ready(function() {
          function initializeUI() {
             createSteps();
             updateProgress();
+            updateFinishButton();
         }
 
         // Update all UI elements
@@ -495,6 +532,7 @@ $(document).ready(function() {
         });
 
         updateProgress();
+        updateFinishButton();
         }
 
         // Update progress line
@@ -502,6 +540,27 @@ $(document).ready(function() {
             const progressLine = document.getElementById('progressLine');
             const progress = (currentStep / (steps.length - 1)) * 100;
             progressLine.style.width = `${progress}%`;
+        }
+
+        // Update Finish Button BELOM SELESAI
+        function updateFinishButton() {
+            const nextButton = document.getElementById('nextStep');
+            const backButton = document.getElementById('backStep');
+            const finishButton = document.getElementById('finishStep');
+
+            if (currentStep === firstStep) { // cari max step nya dahulu
+                backButton.disabled = true;
+                nextButton.disabled = false;
+                finishButton.disabled = true;
+            } else if (currentStep === lastStep) {
+                backButton.disabled = false;
+                nextButton.disabled = true;
+                finishButton.disabled = false;
+            } else {
+                backButton.disabled = false;
+                nextButton.disabled = false;
+                finishButton.disabled = true;
+            }
         }
 
         // Initialize the UI when the page loads
@@ -595,6 +654,25 @@ $(document).ready(function() {
                 $('#responseMessage')
                     .text('Error: ' + errorMessage);
             }
+        });
+    });
+
+    $('#finishStep').click(function() {
+        let id = '{{ $kamar->id }}';
+        var updateUrl = '{{ route("admin.monitoring.ajax.finish.step", ":id") }}';
+        let ajaxUrl = updateUrl.replace(':id', id);
+        $.ajax({
+            url: ajaxUrl,
+            type: 'PUT',
+            data: {
+                step: 'finish',
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                var finishUrl = '{{ route("index.pilih.operator.ok", ":id") }}';
+                let redirectUrl = finishUrl.replace(':id', id);
+                window.location.href = redirectUrl;
+            },
         });
     });
 })
