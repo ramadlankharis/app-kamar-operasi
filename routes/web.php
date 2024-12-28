@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardMonitorController;
 use App\Http\Controllers\DisplayKamarOkController;
+use App\Http\Controllers\Admin\MasterOperatorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SendMessageController;
 use Illuminate\Support\Facades\Route;
@@ -50,7 +51,7 @@ Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(funct
         $user->assignRole('operator');
         return "Role berhasil diberikan ke user {$user->name}";
     });
-    
+
     Route::get('/check-role', function () {
         $user = User::find(2); // Ganti ID sesuai user yang ingin dicek
         if ($user->hasRole('admin')) {
@@ -71,7 +72,7 @@ Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(funct
         Route::get('/management-users', [UserController::class, 'index'])->name('users.index');
         Route::delete('/management-users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
         // Route::get('/management-users/create', [UserController::class, 'create'])->name('users.create');
-       
+
 
        // Master Status Operasi
         Route::get('/master-status-operasi', [MasterStatusOperasiController::class, 'index'])->name('admin.master-status-operasi.index');
@@ -88,7 +89,14 @@ Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(funct
         Route::get('/master-ok/{id}/edit', [MasterOkController::class, 'edit'])->name('admin.master-ok.edit');
         Route::put('/master-ok/{id}', [MasterOkController::class, 'update'])->name('admin.master-ok.update');
 
-        
+        // Master Operator
+        Route::get('/master-operator', [MasterOperatorController::class, 'index'])->name('admin.master-operator.index');
+        Route::get('/master-operator/search', [MasterOperatorController::class, 'search'])->name('admin.master-operator.search');
+        Route::get('/master-operator/create', [MasterOperatorController::class, 'create'])->name('admin.master-operator.create');
+        Route::post('/master-operator/store', [MasterOperatorController::class, 'store'])->name('admin.master-operator.store');
+        Route::get('/master-operator/{id}/edit', [MasterOperatorController::class, 'edit'])->name('admin.master-operator.edit');
+        Route::put('/master-operator/{id}', [MasterOperatorController::class, 'update'])->name('admin.master-operator.update');
+        Route::delete('/master-operator/{id}', [MasterOperatorController::class, 'destroy'])->name('admin.master-operator.destroy');
     });
     // end middleware admin
 
@@ -96,14 +104,19 @@ Route::prefix('/dashboard-pages')->middleware(['auth', 'verified'])->group(funct
      Route::middleware('role:operator,admin')->group(function () {
         // Update Status OK
         Route::get('/pilih-ruangan/ok', [MonitoringOkController::class, 'pilihRuanganOk'])->name('index.pilih.ruangan.ok');
+        Route::get('/pilih-ruangan/ok/{id}/operator', [MonitoringOkController::class, 'pilihOperatorOk'])->name('index.pilih.operator.ok');
         Route::get('/update-status-ruangan/{id}/edit', [MonitoringOkController::class, 'edit'])->name('admin.monitoring.edit');
         Route::put('/update-status-ruangan/{id}', [MonitoringOkController::class, 'updateRuangan'])->name('admin.monitoring.update');
+        // ajax fetch data
+        Route::get('/ajax/fetch-operator', [MonitoringOkController::class, 'ajaxFetchOperator'])->name('admin.monitoring.ajax.fetch.operator');
         // ajax Update Status OK
+        Route::put('/ajax/update-status-operator/{id}', [MonitoringOkController::class, 'ajaxChangeOperator'])->name('admin.monitoring.ajax.operator');
         Route::put('/ajax/update-status-ruangan-next/{id}', [MonitoringOkController::class, 'ajaxNextStep'])->name('admin.monitoring.ajax.next.step');
         Route::put('/ajax/update-status-ruangan-back/{id}', [MonitoringOkController::class, 'ajaxBackStep'])->name('admin.monitoring.ajax.back.step');
+        Route::put('/ajax/update-status-ruangan-finish/{id}', [MonitoringOkController::class, 'ajaxFinishStep'])->name('admin.monitoring.ajax.finish.step');
     });
     // end middleware operator
-    
+
 });
 
 Route::middleware('auth')->group(function () {

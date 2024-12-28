@@ -31,6 +31,9 @@
                             <li>
                                 <a href="{{ route('admin.master-ok.index') }}">Master OK</a>
                             </li>
+                            <li>
+                                <a href="{{ route('admin.master-operator.index') }}">Master Operator</a>
+                            </li>
                             @endrole
                             {{-- @role('operator') --}}
                             @hasanyrole('operator|admin')

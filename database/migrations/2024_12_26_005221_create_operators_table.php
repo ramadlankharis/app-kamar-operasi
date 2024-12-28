@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('display_oks', function (Blueprint $table) {
+        Schema::create('operators', function (Blueprint $table) {
             $table->id();
-            $table->integer('squence_status_operasi');
-            $table->integer('id_operator')->nullable();
-            $table->string('nama_ruangan');
-            $table->boolean('is_active')->default(true);
-            $table->text('sender')->nullable();
+            $table->string('nama');
+            $table->boolean('is_available')->default(true);
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('display_oks');
+        Schema::dropIfExists('operator');
     }
 };
